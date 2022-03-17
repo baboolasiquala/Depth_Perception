@@ -228,8 +228,8 @@ As we can see, the quality is comparable, however, it depends on what the fundam
 Using this setup we managed to achieve these results. Keep in mind that applying postprocessing to your video feed can cut you some frames. Below we display 3 examples of real-time disparity maps, one of which is raw, the other two are with postprocessing.
 
 [Disparity Gif](/assets/Gifs/disparity.gif)
-<iframe src="https://giphy.com/embed/g4UmwJg55GpuEGoMUB" width="720" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 <iframe src="https://giphy.com/embed/zF7atpM8PXi1nMiiRH" width="720" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+<iframe src="https://giphy.com/embed/g4UmwJg55GpuEGoMUB" width="720" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 <iframe src="https://giphy.com/embed/Wja0v1r3Fs23QYRGJU" width="720" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 
 
@@ -258,9 +258,6 @@ Once a depth map has been created there are multiple integrations that can be do
 
 <li><a href="https://www.youtube.com/watch?v=LR0bDLCElKg">Teslas work in depth perception.</a></li><br>
 
-<li>https://giphy.com/channel/OnABottle</li></ol>
-
 [Github](https://github.com/steiva/me455project)
 
 [jekyll-gh]:   https://github.com/steiva/me455project
-[jekyll-talk]: https://talk.jekyllrb.com/
