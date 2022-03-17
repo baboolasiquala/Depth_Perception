@@ -98,7 +98,7 @@ Our setup consisted of two android cameras being used as wireless IP cameras. <b
 We used the application iVcam to stream the video signals from both the cell phones and use the PC client to receive it. We could have directly accessed the phones on the network via openCV however there was a significant lag of as much as ten seconds in the feed. 
 
 It is important to note that for a robust real time system to work the video feeds must be synchronized in time, this is impossible as both cameras run on their individual system clocks.
-To minimize the delay we used iVcam’s drivers to receive the video and in our code we used cv.grab and `cv.retrieve` to get the two frames and decode them after respectively. The alternative is to use `cv.read` which <i>grabs</i> and <i>retrieves</i> together therefore creating the delay of one frame being decoded. 
+To minimize the delay we used iVcam’s drivers to receive the video and in our code we used cv.grab and `cv.retrieve()` to get the two frames and decode them after respectively. The alternative is to use `cv.read()` which <i>grabs</i> and <i>retrieves</i> together therefore creating the delay of one frame being decoded. 
 
 The above measures minimized the delay and iVcam’s client allowed us to tweak the attributes such as exposure, ISO and focus to maintain consistency. The automatic dynamics of the cameras operating individually can create significant problems as the pixel values vary due to lighting and other noises between the two images. In an ideal scenario we want two same images with a fully aligned y axis with only a difference in the x axis to produce disparity.
 
@@ -108,7 +108,7 @@ The best hardware setup is to have the exact same camera setup rigidly connected
 
 The first step for creating a disparity map is to calibrate the two cameras being used and use the calibration data for rectification of both source images. The theory of camera calibration has been mentioned in detail here. The main idea with rectification is to align the images from the two cameras so that their y-axis are completely aligned. The y-axis alignment is important as when we compute disparity the search for matching points is executed along one row of pixels to keep it fast.
 
-The first step is to determine the relationship between the cameras and their intrinsic parameters. We follow the standard way to do this by using a checkerboard and listing the matches between the two images using `cv.findChessboardCorners`. As this is done within openCV it is important to verify the results by using `cv.drawChessboardCorners` and viewing the resulting images to check if the matches were done correctly.
+The first step is to determine the relationship between the cameras and their intrinsic parameters. We follow the standard way to do this by using a checkerboard and listing the matches between the two images using `cv.findChessboardCorners()`. As this is done within openCV it is important to verify the results by using `cv.drawChessboardCorners()` and viewing the resulting images to check if the matches were done correctly.
 
 Successful matches should be as follows where all the number of the corners defined in the code are mapped and have the same color in the two images:
 
@@ -142,7 +142,7 @@ There are multiple issues that are possible in calibration and rectification and
 
 <h2>Creating the disparity map</h2>
 
-Once images have been rectified and are aligned the disparity map can be created using the function `cv.StereoBM` or `cv.StereooSGBM`. The function has multiple parameters that directly affect the output and their respective descriptions can be read here. It can be useful to create a tool to alter the parameters in real time and see the results. We altered a code to work with static images to experiment with different settings of the parameters.
+Once images have been rectified and are aligned the disparity map can be created using the function `cv.StereoBM()` or `cv.StereooSGBM()`. The function has multiple parameters that directly affect the output and their respective descriptions can be read here. It can be useful to create a tool to alter the parameters in real time and see the results. We altered a code to work with static images to experiment with different settings of the parameters.
 
 <h2>Post processing the disparity map</h2>
 Post processing of the disparity map is an important step for achieving better results. In our experiment, the <code>cv.ximgproc.createDisparityWLSFilter()</code> is used. More on it can be read on the official [OpenCV tutorial](https://docs.opencv.org/4.x/d3/d14/tutorial_ximgproc_disparity_filtering.html) , as well as this [Stackoverflow discussion](https://stackoverflow.com/questions/62627109/how-do-you-use-opencvs-disparitywlsfilter-in-python). Our implementation uses both disparity maps - the left and right one, to create a cleaner version. The following examples show the difference between a raw disparity map and a filtered one:
@@ -157,7 +157,7 @@ An alternative to the precalculated fundamental matrix that is achieved using th
 <ol>
 <li>First, we need to rectify our images, to achieve vertical alignment. Instead of using a precalculated matrix for the two cameras, we rectify the images only based on the matches between them. Thus, we need to find those matches. We need to find keypoints in both images, so we could use something like <code>sift = cv.SIFT_create()</code> and <code>kp1, des1 = sift.detectAndCompute()</code>.</li><br>
 <li>Then we need to match the keypoints, using cv.FlannBasedMatcher(index_params, search_params).</li><br>
-<li>What if there are multiple matches to the same keypoints? We can use RANSAC to filter for only good matches. In our implementation, RANSAC is used internally, when the fundamental matrix is being found by <code>fundamental_matrix</code>, <code>inliers = cv.findFundamentalMat(pts1, pts2, cv.FM_RANSAC)</code></li><br>
+<li>What if there are multiple matches to the same keypoints? We can use RANSAC to filter for only good matches. In our implementation, RANSAC is used internally, when the fundamental matrix is being found by <code>fundamental_matrix, inliers = cv.findFundamentalMat(pts1, pts2, cv.FM_RANSAC)</code></li><br>
 <li>The fundamental matrix establishes a connection between the images, but we need to warp them somehow, to align the vertical levels of the images. We do this by <code>_, H1, H2 = cv.stereoRectifyUncalibrated(np.float32(pts1), np.float32(pts2), fundamental_matrix, imgSize=(w1, h1))</code>.</li><br>
 <li>The final step is to apply the transformation to both images, this can be done by using<br>
 <code>img1_rectified = cv.warpPerspective(img1, H1, (w1, h1))</code><br>
