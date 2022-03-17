@@ -92,7 +92,7 @@ Our setup consisted of two android cameras being used as wireless IP cameras. <b
 
 <b>Cameras being used:</b><br><br>
 
-![26](./assets/images/26.png){:class="img-responsive"}<br><br>
+![26](./assets/images/26.PNG){:class="img-responsive"}<br><br>
 
 
 We used the application <strong>iVcam</strong> to stream the video signals from both the cell phones and use the PC client to receive it. We could have directly accessed the phones on the network via <strong>openCV</strong> however there was a significant lag of as much as ten seconds in the feed. 
