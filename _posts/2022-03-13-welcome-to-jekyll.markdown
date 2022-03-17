@@ -95,7 +95,7 @@ Our setup consisted of two android cameras being used as wireless IP cameras. <b
 ![26](./assets/images/26.PNG){:class="img-responsive"}<br><br>
 
 
-We used the application <strong>iVcam</strong> to stream the video signals from both the cell phones and use the PC client to receive it. We could have directly accessed the phones on the network via <strong>openCV</strong> however there was a significant lag of as much as ten seconds in the feed. 
+We used the application <strong>[iVcam](https://www.e2esoft.com/ivcam/)</strong> to stream the video signals from both the cell phones and use the PC client to receive it. We could have directly accessed the phones on the network via <strong>openCV</strong> however there was a significant lag of as much as ten seconds in the feed. 
 
 It is important to note that for a robust real time system to work the video feeds must be synchronized in time, this is impossible as both cameras run on their individual system clocks.
 To minimize the delay we used <strong>iVcam’s</strong> drivers to receive the video and in our code we used `cv.grab()` and `cv.retrieve()` to get the two frames and decode them after respectively. The alternative is to use `cv.read()` which <i>grabs</i> and <i>retrieves</i> together therefore creating the delay of one frame being decoded. 
@@ -193,7 +193,7 @@ An alternative to the precalculated fundamental matrix that is achieved using th
 Consider reading more on matching on the official [OpenCV tutorial](https://docs.opencv.org/3.4/dc/dc3/tutorial_py_matcher.html). We also used this [great tutorial](https://www.andreasjakl.com/understand-and-apply-stereo-rectification-for-depth-maps-part-2/) to understand this method.
 
 <h2>Comparison between the Real-time and Precalculated Rectification.</h2>
-Comparing these two methods, we determined a number of pros and cons for both of them:<br>
+Comparing these two methods, we determined a number of pros and cons for both of them:<br><br>
 <strong>Real-time rectification Pros</strong>:
 <ul>
 <li>Easier to implement than Precalculated: no need to have a stereo camera setup, or take a set of chessboard photos with it. You just need two individual images of the same scene, where feature matching can happen.</li>
@@ -201,19 +201,19 @@ Comparing these two methods, we determined a number of pros and cons for both of
 </ul>
 <strong>Real-time rectification Cons:</strong><br>
 <ul>
-<li>The results are not consistent. If you run the algorithm multiple times on the same pair of images, you get very different results sometimes, This is due to randomized feature matching. Each time you get a different fundamental matrix and different rectification.</li><br>
-<li>The algorithm can be computationally intensive, especially if one would consider doing depth maps for a video.</li><br>
-<li>The rectification transformation that is applied here can distort the image a significant amount, making the disparity map somewhat unclear.</li><br>
+<li>The results are not consistent. If you run the algorithm multiple times on the same pair of images, you get very different results sometimes, This is due to randomized feature matching. Each time you get a different fundamental matrix and different rectification.</li>
+<li>The algorithm can be computationally intensive, especially if one would consider doing depth maps for a video.</li>
+<li>The rectification transformation that is applied here can distort the image a significant amount, making the disparity map somewhat unclear.</li>
 </ul>
 <strong>Precalculated rectification Pros:</strong><br>
 <ul>
-<li>The results produced are consistent throughout each image. The transformation is always the same, since the fundamental matrix is precalculated.</li><br>
-<li>Faster processing times. No need to do matching!</li><br>
+<li>The results produced are consistent throughout each image. The transformation is always the same, since the fundamental matrix is precalculated.</li>
+<li>Faster processing times. No need to do matching!</li>
 <li>Can be used for creating disparity maps for video. This is due to the consistency of the rectification as well as the processing times.</li>
 </ul>
 <strong>Precalculated rectification Cons:</strong><br>
 <ul>
-<li>Complicated setup procedure, as you require a stereo camera setup. In our circumstances, rubber banding two cell phones together proved to be flimsy, so for each displacement of the cameras, ideally you have to rectify again. </li><br>
+<li>Complicated setup procedure, as you require a stereo camera setup. In our circumstances, rubber banding two cell phones together proved to be flimsy, so for each displacement of the cameras, ideally you have to rectify again. </li>
 <li>Rectification using the chessboard might be buggy, you need to pay attention to results, as discussed in the “Calibration and Rectification”.  </li>
 </ul>
 Now, let's compare the performance of these two methods using one set of stereo images.
