@@ -130,8 +130,9 @@ Following the identification of the points the intrinsic and extrinsic camera ma
 
 Finally, the stereo map can be used to rectify any pair of images from the camera setup using `cv.remap()`. A good test for successful calibration and rectification is to overlap the two images using `cv.addWeighted()` and check if the y axis are fully aligned as in the following image:
 
+{:refdef: style="text-align: center;"}
 ![30](./assets/images/30.png){:class="img-responsive"}<br><br>
-
+{: refdef}
 
 A poorly overlayed example could be:
 
@@ -185,7 +186,7 @@ Precalculated rectification Pros:<br>
 <li>Faster processing times. No need to do matching!</li><br>
 <li>Can be used for creating disparity maps for video. This is due to the consistency of the rectification as well as the processing times.</li>
 </ul>
-Precalculated rectification Cons:<br>
+* Precalculated rectification Cons: * <br>
 <ul>
 <li>Complicated setup procedure, as you require a stereo camera setup. In our circumstances, rubber banding two cell phones together proved to be flimsy, so for each displacement of the cameras, ideally you have to rectify again. </li><br>
 <li>Rectification using the chessboard might be buggy, you need to pay attention to results, as discussed in the “Calibration and Rectification”.  </li>
@@ -195,6 +196,8 @@ Now, let's compare the performance of these two methods using one set of stereo 
 {:refdef: style="text-align: center;"}
 ![33](./assets/images/comparison.png){:class="img-responsive"}{:height="774px" width="808px"}<br><br>
 {: refdef}
+
+As we can see, the quality is comparable, however, it depends on what the fundamental matrix is going to be for the real-time rectification method.
 
 <h2>Future Work</h2>
 <ol>
