@@ -148,7 +148,7 @@ Once images have been rectified and are aligned the disparity map can be created
 Post processing of the disparity map is an important step for achieving better results. In our experiment, the cv.ximgproc.createDisparityWLSFilter() is used. More on it can be read on the official [OpenCV tutorial](https://docs.opencv.org/4.x/d3/d14/tutorial_ximgproc_disparity_filtering.html) , as well as this [Stackoverflow discussion](https://stackoverflow.com/questions/62627109/how-do-you-use-opencvs-disparitywlsfilter-in-python). Our implementation uses both disparity maps - the left and right one, to create a cleaner version. The following examples show the difference between a raw disparity map and a filtered one:
 
 {:refdef: style="text-align: center;"}
-![32](/assets/images/32.png){:class="img-responsive"}{:height="747px" width="381px"}<br><br>
+![32](assets/images/32.png){:class="img-responsive"}{:height="747px" width="381px"}<br><br>
 {: refdef}
 
 
