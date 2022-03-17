@@ -143,7 +143,32 @@ There are multiple issues that are possible in calibration and rectification and
 
 <h2>Creating the disparity map</h2>
 
-Once images have been rectified and are aligned the disparity map can be created using the function `cv.StereoBM()` or `cv.StereooSGBM()`. The function has multiple parameters that directly affect the output and their respective descriptions can be read here. It can be useful to create a tool to alter the parameters in real time and see the results. We altered a code to work with static images to experiment with different settings of the parameters.
+Once images have been rectified and are aligned the disparity map can be created using the function `cv.StereoBM()` or `cv.StereooSGBM()`. The function has multiple parameters that directly affect the output and their respective descriptions can be read here. It can be useful to create a tool to alter the parameters in real time and see the results. We altered a code to work with static images to experiment with different settings of the parameters. Below is an example of how this could be done:
+
+{% highlight python %}
+block_size = 11
+min_disp = -128
+max_disp = 128
+num_disp = max_disp - min_disp
+uniquenessRatio = 5
+speckleWindowSize = 200
+speckleRange = 2
+disp12MaxDiff = 0
+
+matcher = cv.StereoSGBM_create(
+    minDisparity=min_disp,
+    numDisparities=num_disp,
+    blockSize=block_size,
+    uniquenessRatio=uniquenessRatio,
+    speckleWindowSize=speckleWindowSize,
+    speckleRange=speckleRange,
+    disp12MaxDiff=disp12MaxDiff,
+    P1=8 * 1 * block_size * block_size,
+    P2=32 * 1 * block_size * block_size,
+)
+
+disparity = matcher.compute(imgL_rect, imgR_rect)
+{% endhighlight %}
 
 <h2>Post processing the disparity map</h2>
 Post processing of the disparity map is an important step for achieving better results. In our experiment, the <code>cv.ximgproc.createDisparityWLSFilter()</code> is used. More on it can be read on the official [OpenCV tutorial](https://docs.opencv.org/4.x/d3/d14/tutorial_ximgproc_disparity_filtering.html) , as well as this [Stackoverflow discussion](https://stackoverflow.com/questions/62627109/how-do-you-use-opencvs-disparitywlsfilter-in-python). Our implementation uses both disparity maps - the left and right one, to create a cleaner version. The following examples show the difference between a raw disparity map and a filtered one:
