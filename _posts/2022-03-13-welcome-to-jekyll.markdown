@@ -153,7 +153,7 @@ Post processing of the disparity map is an important step for achieving better r
 
 
 <h2>Real-time Rectification method</h2>
-`An` alternative to the precalculated fundamental matrix that is achieved using the chessboard method, would be to calculate the fundamental matrix for each individual image based on the matches between the images. This method is easier to implement in comparison to the chessboard calibration, where you have to take a whole set of photos and calibrate over them. Here is the approximate pipeline one would use to achieve this:
+An alternative to the precalculated fundamental matrix that is achieved using the chessboard method, would be to calculate the fundamental matrix for each individual image based on the matches between the images. This method is easier to implement in comparison to the chessboard calibration, where you have to take a whole set of photos and calibrate over them. Here is the approximate pipeline one would use to achieve this:
 <ol>
 <li>First, we need to rectify our images, to achieve vertical alignment. Instead of using a precalculated matrix for the two cameras, we rectify the images only based on the matches between them. Thus, we need to find those matches. We need to find keypoints in both images, so we could use something like <code>sift = cv.SIFT_create()</code> and <code>kp1, des1 = sift.detectAndCompute()</code>.</li><br>
 <li>Then we need to match the keypoints, using cv.FlannBasedMatcher(index_params, search_params).</li><br>
