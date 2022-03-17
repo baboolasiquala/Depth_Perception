@@ -98,11 +98,7 @@ Our setup consisted of two android cameras being used as wireless IP cameras. <b
 We used the application <strong>iVcam</strong> to stream the video signals from both the cell phones and use the PC client to receive it. We could have directly accessed the phones on the network via <strong>openCV</strong> however there was a significant lag of as much as ten seconds in the feed. 
 
 It is important to note that for a robust real time system to work the video feeds must be synchronized in time, this is impossible as both cameras run on their individual system clocks.
-<<<<<<< HEAD
-To minimize the delay we used iVcam’s drivers to receive the video and in our code we used cv.grab and `cv.retrieve` to get the two frames and decode them after respectively. The alternative is to use `cv.read` which <i>grabs</i> and <i>retrieves</i> together therefore creating the delay of one frame being decoded. 
-=======
-To minimize the delay we used <strong>iVcam’s</strong> drivers to receive the video and in our code we used `cv.grab` and `cv.retrieve` to get the two frames and decode them after respectively. The alternative is to use `cv.read` which <i>grabs</i> and <i>retrieves</i> together therefore creating the delay of one frame being decoded. 
->>>>>>> 7c09125f5b185455caff72d50c48e8152a744e9a
+To minimize the delay we used <strong>iVcam’s</strong> drivers to receive the video and in our code we used `cv.grab()` and `cv.retrieve()` to get the two frames and decode them after respectively. The alternative is to use `cv.read()` which <i>grabs</i> and <i>retrieves</i> together therefore creating the delay of one frame being decoded. 
 
 The above measures minimized the delay and <strong>iVcam’s</strong> client allowed us to tweak the attributes such as exposure, ISO and focus to maintain consistency. The automatic dynamics of the cameras operating individually can create significant problems as the pixel values vary due to lighting and other noises between the two images. In an ideal scenario we want two same images with a fully aligned y axis with only a difference in the x axis to produce disparity.
 
@@ -118,7 +114,7 @@ Successful matches should be as follows where all the number of the corners defi
 
 ![27](./assets/images/27.png){:class="img-responsive"}<br><br>
 
-Possible issues at this stage can be that the corners are not found at all or the points are erroneously identified. If the corners are not found there is another function `cv.findChessboardCornersSB` that can be used which uses a different algorithm and in our experience performed better, however ideally this should not be required.
+Possible issues at this stage can be that the corners are not found at all or the points are erroneously identified. If the corners are not found there is another function `cv.findChessboardCornersSB()` that can be used which uses a different algorithm and in our experience performed better, however ideally this should not be required.
 
 Due to low resolution or sharp angles often the matches on the board were not the same as in the following:
 
@@ -130,9 +126,9 @@ Another difficult to detect issue is when one checkerboard is detected as invert
 
 It is important to remove any such images as even one such pair of images can distort the output and create errors with the rectification.
 
-Following the identification of the points the intrinsic and extrinsic camera matrices calculation is straight forward utilizing `cv.calibrateCamera` and `cv.stereoCalibrate`. These matrices are then used in `cv.stereoRectify` to get the mapping matrices, finally `cv.initUndistortRectifyMap` is used to create the stereo map. It is useful to use the `roi_L` and `roi_R` output of `stereoRectify` to understand any bugs; it outputs coordinates for a rectangle for both the images that the program considers as overlapping data. 
+Following the identification of the points the intrinsic and extrinsic camera matrices calculation is straight forward utilizing `cv.calibrateCamera()` and `cv.stereoCalibrate()`. These matrices are then used in `cv.stereoRectify()` to get the mapping matrices, finally `cv.initUndistortRectifyMap()` is used to create the stereo map. It is useful to use the `roi_L` and `roi_R` output of `stereoRectify` to understand any bugs; it outputs coordinates for a rectangle for both the images that the program considers as overlapping data. 
 
-Finally, the stereo map can be used to rectify any pair of images from the camera setup using `cv.remap`. A good test for successful calibration and rectification is to overlap the two images using `cv.addWeighted` and check if the y axis are fully aligned as in the following image:
+Finally, the stereo map can be used to rectify any pair of images from the camera setup using `cv.remap()`. A good test for successful calibration and rectification is to overlap the two images using `cv.addWeighted()` and check if the y axis are fully aligned as in the following image:
 
 ![30](./assets/images/30.png){:class="img-responsive"}<br><br>
 
