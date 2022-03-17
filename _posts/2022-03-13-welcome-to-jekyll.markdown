@@ -233,6 +233,8 @@ Using this setup we managed to achieve these results. Keep in mind that applying
 <iframe src="https://giphy.com/embed/Wja0v1r3Fs23QYRGJU" width="720" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 
 
+$$ \nabla_\boldsymbol{x} J(\boldsymbol{x}) $$
+
 <h2>Future Work</h2>
 <ol>
 <li>The next most obvious step for future work is going from the disparity map to a depth map. For this the transformation is as follows:<br><br>
