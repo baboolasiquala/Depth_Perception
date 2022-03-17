@@ -190,7 +190,11 @@ Precalculated rectification Cons:<br>
 <li>Complicated setup procedure, as you require a stereo camera setup. In our circumstances, rubber banding two cell phones together proved to be flimsy, so for each displacement of the cameras, ideally you have to rectify again. </li><br>
 <li>Rectification using the chessboard might be buggy, you need to pay attention to results, as discussed in the “Calibration and Rectification”.  </li>
 </ul>
+Now, let's compare the performance of these two methods using one set of stereo images.
 
+{:refdef: style="text-align: center;"}
+![33](./assets/images/comparison.png){:class="img-responsive"}{:height="774px" width="808px"}<br><br>
+{: refdef}
 
 <h2>Future Work</h2>
 <ol>
