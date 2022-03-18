@@ -11,7 +11,7 @@ In order to deduce depth perception we are in need of 2 cameras at a specified h
 
 The rationale provided above is also the reason why a single camera is not sufficient to deduce depth, at least without being aided with the help of neural networks or using Active stereo with the employment of light.
 
-In order to use the Disparity to deduce depth we have to then use Traingulation which is a geometric approach used to deduce depth. 
+In order to use the Disparity to deduce depth we have to then use Triangulation which is a geometric approach used to deduce depth. 
 
 In order to go about this math we must understand that there are 3 planes we travel in between in order to deduce depth. There is the world coordinate plane, the camera coordinate plane and the image coordinate plane. Image plane is where the image sensor lies and the camera plane is where the lens lies. A transformation is undergone from 3D to 2D when we tranform the coordinates from the world coordinates to the image coordinates and vice versa. The transformation from the world coordinates to the camera coordinates is a 3-D to 3-D tranformation and the tranformation from the camera to the image plane in a 3-D to 2-D transformation. 
 
@@ -98,7 +98,7 @@ r_{21} & r_{22} & r_{23} \\
 r_{31} & r_{32} & r_{33}
 \end{array}\right] $$
 
-It should be noted that the rotation matrix is a orthonormal matrix as in, when a dot product is carried by itself it produces an Identity matrix and it's inverse is equivalent to it's transpose.<br><br>
+It should be noted that the rotation matrix is a orthonormal matrix as in, when a dot product is carried by itself it produces an Identity matrix and its inverse is equivalent to its transpose.<br><br>
 
 $$ X_{c}=R\left(X_{w}-C_{w}\right)=R X_{w}-R C_{w}=R X_{w}+t $$
 
@@ -204,12 +204,11 @@ Our setup consisted of two android cameras being used as wireless IP cameras. <b
 {:refdef: style="text-align: center;"}
 ![25](./assets/images/25.png){:class="img-responsive"}{:height="300px" width="400px"}<br><br>
 {: refdef}
+*Fig. 1. Photograph of our stereo camera setup.*
 
 <b>Cameras being used:</b><br><br>
 
 ![26](./assets/images/26.PNG){:class="img-responsive"}<br><br>
-*Fig. 1. Photograph of our stereo camera setup.*
-
 
 We used the application <strong>[iVcam](https://www.e2esoft.com/ivcam/)</strong> to stream the video signals from both the cell phones and use the PC client to receive it. We could have directly accessed the phones on the network via <strong>openCV</strong> however there was a significant lag of as much as ten seconds in the feed. 
 
@@ -284,10 +283,12 @@ Possible issues at this stage can be that the corners are not found at all or th
 Due to low resolution or sharp angles often the matches on the board were not the same as in the following:
 
 ![28](./assets/images/28.png){:class="img-responsive"}<br><br>
+*Fig. 3. Example of an unsuccessful chessboard corner matching.*
 
 Another difficult to detect issue is when one checkerboard is detected as inverted, one can know this if the colors do not align as in the following:
 
 ![29](./assets/images/29.png){:class="img-responsive"}<br><br>
+*Fig. 4. Unwanted inversion of color order in chessboard matching.*
 
 It is important to remove any such images as even one such pair of images can distort the output and create errors with the rectification.
 
@@ -298,11 +299,12 @@ Finally, the stereo map can be used to rectify any pair of images from the camer
 {:refdef: style="text-align: center;"}
 ![30](./assets/images/30.png){:class="img-responsive"}<br><br>
 {: refdef}
+*Fig. 5. An example of proper vertical alignment of the stereo image pair.*
 
 A poorly overlayed example could be:
 
 ![31](./assets/images/31.png){:class="img-responsive"}<br><br>
-
+*Fig. 6. An example of poorly aligned stereo image pair.*
 
 There are multiple issues that are possible in calibration and rectification and it is important to test at the intermediate steps utilizing the methods mentioned above.
 
@@ -341,6 +343,7 @@ Post processing of the disparity map is an important step for achieving better r
 {:refdef: style="text-align: center;"}
 ![32](./assets/images/32.png){:class="img-responsive"}{:height="747px" width="381px"}<br><br>
 {: refdef}
+*Fig. 7. Comparison of raw and filtered disparity map.*
 
 Below a sample function constructing and filtering a disparity map can be found:
 
@@ -479,6 +482,7 @@ Now, let's compare the performance of these two methods using one set of stereo 
 {:refdef: style="text-align: center;"}
 ![33](./assets/images/comparison.png){:class="img-responsive"}{:height="774px" width="808px"}<br><br>
 {: refdef}
+*Fig. 8. Comparison of Real-time and Precalculated rectification.*
 
 As we can see, the quality is comparable, however, it depends on what the fundamental matrix is going to be for the real-time rectification method.
 
