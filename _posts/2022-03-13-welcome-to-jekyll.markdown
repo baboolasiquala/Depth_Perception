@@ -178,7 +178,7 @@ The idea is that 2 cameras are seperated by a realtively small horizontal distan
 
 $$ \begin{aligned}
 &u_{l}=f_{x} \frac{x}{z}+o_{x} ; v_{l}=f_{y} \frac{y}{z}+o_{y} \\
-&u_{r}=f_{x} \frac{\dot{x}-b}{z}+o_{x} ; v_{r}=f_{y} \frac{y}{z}+o_{y}
+&u_{r}=f_{x} \frac{x-b}{z}+o_{x} ; v_{r}=f_{y} \frac{y}{z}+o_{y}
 \end{aligned} $$
 
 b = baseline distance between two lenses
@@ -350,11 +350,11 @@ Using this setup we managed to achieve these results. Keep in mind that applying
 <ol>
 <li>The next most obvious step for future work is going from the disparity map to a depth map. For this the transformation is as follows:<br><br>
 
-Depth (mm) = baseline distance (mm) * focal length (pixels) / disparity (pixels)<br><br>
+$$ &z=\frac{b f_{x}}{\left(u_{l}-u_{r}\right)}=\text { depth } $$
 
 The focal length in pixels can be obtained using the following:<br><br>
 
-F (pixels) = ImageWidth (pixel) * F (mm) / SensorWidth (mm)<br><br>
+$$ f_{pixels} = \frac{ImageWidth * f_{mm}}{SensorWidth_{mm}} $$
 
 Once a depth map has been created there are multiple integrations that can be done with real time robotic systems.</li><br>
  
