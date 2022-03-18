@@ -305,9 +305,7 @@ Following the identification of the points the intrinsic and extrinsic camera ma
 
 Finally, the stereo map can be used to rectify any pair of images from the camera setup using `cv.remap()`. A good test for successful calibration and rectification is to overlap the two images using `cv.addWeighted()` and check if the y axis are fully aligned as in the following image:
 
-{:refdef: style="text-align: center;"}
 | ![30](./assets/images/30.png){:class="img-responsive"}<br><br> |
-{: refdef}
 |:--:| 
 | *Fig. 5. An example of proper vertical alignment of the stereo image pair.* |
 
