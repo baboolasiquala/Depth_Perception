@@ -208,6 +208,7 @@ Our setup consisted of two android cameras being used as wireless IP cameras. <b
 <b>Cameras being used:</b><br><br>
 
 ![26](./assets/images/26.PNG){:class="img-responsive"}<br><br>
+*Fig. 1. Photograph of our stereo camera setup.*
 
 
 We used the application <strong>[iVcam](https://www.e2esoft.com/ivcam/)</strong> to stream the video signals from both the cell phones and use the PC client to receive it. We could have directly accessed the phones on the network via <strong>openCV</strong> however there was a significant lag of as much as ten seconds in the feed. 
@@ -276,6 +277,7 @@ The first step is to determine the relationship between the cameras and their in
 Successful matches should be as follows where all the number of the corners defined in the code are mapped and have the same color in the two images:
 
 ![27](./assets/images/27.png){:class="img-responsive"}<br><br>
+*Fig. 2. Example of successful chessboard corner matching.*
 
 Possible issues at this stage can be that the corners are not found at all or the points are erroneously identified. If the corners are not found there is another function `cv.findChessboardCornersSB()` that can be used which uses a different algorithm and in our experience performed better, however ideally this should not be required.
 
