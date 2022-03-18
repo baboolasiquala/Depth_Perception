@@ -181,7 +181,7 @@ $$ \begin{aligned}
 &u_{r}=f_{x} \frac{x-b}{z}+o_{x} ; v_{r}=f_{y} \frac{y}{z}+o_{y}
 \end{aligned} $$
 
-b = baseline distance between two lenses
+Where $$ b $$ is the baseline distance between two lenses.
 
 From the calibration we know of the intrinsic parameters and can re-arrange the equation to find the world co-ordinates. <br><br>
 
