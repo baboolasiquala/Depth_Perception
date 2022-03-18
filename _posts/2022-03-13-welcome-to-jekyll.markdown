@@ -292,12 +292,43 @@ Post processing of the disparity map is an important step for achieving better r
 ![32](./assets/images/32.png){:class="img-responsive"}{:height="747px" width="381px"}<br><br>
 {: refdef}
 
+Below a sample function constructing and filtering a disparity map can be found:
+
+{% highlight python %}
+def disp_filtering(imgL_rect, imgR_rect, left_matcher, lmbda=8000, sigma=1.5):
+    '''
+    Function filters the raw disparity map, giving a better representation.
+    :param imgL_rect: left rectified image.
+    :param imgR_rect: right rectified image.
+    :param left_matcher: a matcher object like cv.StereoSGBM_create().
+    :param lmbda: Lambda is a parameter defining the amount of regularization 
+    during filtering. Larger values force filtered disparity map edges to 
+    adhere more to source image edges. Typical value is 8000.
+    :param sigma: SigmaColor is a parameter defining how sensitive the filtering
+    process is to source image edges. Large values can lead to disparity leakage
+    through low-contrast edges. Small values can make the filter too sensitive to
+    noise and textures in the source image. Typical values range from 0.8 to 2.0.
+    :returns: filtered left and right disparity maps.
+    '''
+    right_matcher = cv.ximgproc.createRightMatcher(left_matcher)
+    wls_filter = cv.ximgproc.createDisparityWLSFilter(
+        matcher_left=left_matcher)
+    wls_filter.setLambda(lmbda)
+    wls_filter.setSigmaColor(sigma)
+    displ = left_matcher.compute(imgL_rect, imgR_rect)
+    dispr = right_matcher.compute(imgR_rect, imgL_rect)
+    fil_disp_left = wls_filter.filter(
+        disparity_map_left=displ, left_view=imgL_rect, disparity_map_right=dispr)
+    fil_disp_right = wls_filter.filter(
+        disparity_map_left=displ, left_view=imgR_rect, disparity_map_right=dispr)
+    return fil_disp_left, fil_disp_right
+{% endhighlight %}
 
 <h2>Real-time Rectification method</h2>
 An alternative to the precalculated fundamental matrix that is achieved using the chessboard method, would be to calculate the fundamental matrix for each individual image based on the matches between the images. This method is easier to implement in comparison to the chessboard calibration, where you have to take a whole set of photos and calibrate over them. Here is the approximate pipeline one would use to achieve this:
 <ol>
 <li>First, we need to rectify our images, to achieve vertical alignment. Instead of using a precalculated matrix for the two cameras, we rectify the images only based on the matches between them. Thus, we need to find those matches. We need to find keypoints in both images, so we could use something like <code>sift = cv.SIFT_create()</code> and <code>kp1, des1 = sift.detectAndCompute()</code>.</li><br>
-<li>Then we need to match the keypoints, using cv.FlannBasedMatcher(index_params, search_params).</li><br>
+<li>Then we need to match the keypoints, using <code>cv.FlannBasedMatcher(index_params, search_params)</code>.</li><br>
 <li>What if there are multiple matches to the same keypoints? We can use RANSAC to filter for only good matches. In our implementation, RANSAC is used internally, when the fundamental matrix is being found by <code>fundamental_matrix, inliers = cv.findFundamentalMat(pts1, pts2, cv.FM_RANSAC)</code></li><br>
 <li>The fundamental matrix establishes a connection between the images, but we need to warp them somehow, to align the vertical levels of the images. We do this by <code>_, H1, H2 = cv.stereoRectifyUncalibrated(np.float32(pts1), np.float32(pts2), fundamental_matrix, imgSize=(w1, h1))</code>.</li><br>
 <li>The final step is to apply the transformation to both images, this can be done by using<br>
@@ -305,7 +336,69 @@ An alternative to the precalculated fundamental matrix that is achieved using th
 <code>img2_rectified = cv.warpPerspective(img2, H2, (w2, h2))</code><br></li><br>
 <li>Profit! We have rectified our images, and now we can use the standard procedure to calculate the disparity.</li>
 </ol>
-Consider reading more on matching on the official [OpenCV tutorial](https://docs.opencv.org/3.4/dc/dc3/tutorial_py_matcher.html). We also used this [great tutorial](https://www.andreasjakl.com/understand-and-apply-stereo-rectification-for-depth-maps-part-2/) to understand this method.
+Consider reading more on matching on the official [OpenCV tutorial](https://docs.opencv.org/3.4/dc/dc3/tutorial_py_matcher.html). We also used this [great tutorial](https://www.andreasjakl.com/understand-and-apply-stereo-rectification-for-depth-maps-part-2/) to understand this method. Also, here are a couple of functions that would do this process for you:
+
+{% highlight python %}
+def find_matches(img1, img2):
+    '''
+    Function takes in two images and finds best matches between them.
+    :param img1: first image.
+    :param img2: second image. 
+    :returns: list with good matches, lists with coords from imgL and imgR.
+    '''
+    sift = cv.SIFT_create()
+    kp1, des1 = sift.detectAndCompute(img1, None)
+    kp2, des2 = sift.detectAndCompute(img2, None)
+
+    FLANN_INDEX_KDTREE = 1
+    index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
+    search_params = dict(checks=50)   # or pass empty dictionary
+    flann = cv.FlannBasedMatcher(index_params, search_params)
+    matches = flann.knnMatch(des1, des2, k=2)
+
+    matchesMask = [[0, 0] for i in range(len(matches))]
+    good = []
+    pts1 = []
+    pts2 = []
+
+    for i, (m, n) in enumerate(matches):
+        if m.distance < 0.7*n.distance:
+            # Keep this keypoint pair
+            matchesMask[i] = [1, 0]
+            good.append(m)
+            pts2.append(kp2[m.trainIdx].pt)
+            pts1.append(kp1[m.queryIdx].pt)
+
+    pts1 = np.int32(pts1)
+    pts2 = np.int32(pts2)
+
+    return good, pts1, pts2
+
+
+def rectify_images(img1, img2, pts1, pts2):
+    '''
+    Rectification of images using the Fundamental Matrix.
+    :param img1: first image to rectify.
+    :param img2: second image to rectify.
+    :param pts1: feature points in the first image.
+    :param pts2: feature points in the second image.
+    :returns: rectified images 1 and 2.
+    '''
+    fundamental_matrix, inliers = cv.findFundamentalMat(
+        pts1, pts2, cv.FM_RANSAC)
+
+    h1, w1 = img1.shape[:-1]
+    h2, w2 = img2.shape[:-1]
+    _, H1, H2 = cv.stereoRectifyUncalibrated(
+        np.float32(pts1), np.float32(pts2), fundamental_matrix, imgSize=(w1, h1)
+    )
+
+    img1_rectified = cv.warpPerspective(img1, H1, (w1, h1))
+    img2_rectified = cv.warpPerspective(img2, H2, (w2, h2))
+    return img1_rectified, img2_rectified
+{% endhighlight %}
+
+
 
 <h2>Comparison between the Real-time and Precalculated Rectification.</h2>
 Comparing these two methods, we determined a number of pros and cons for both of them:<br><br>
@@ -350,7 +443,7 @@ Using this setup we managed to achieve these results. Keep in mind that applying
 <ol>
 <li>The next most obvious step for future work is going from the disparity map to a depth map. For this the transformation is as follows:<br><br>
 
-$$ &z=\frac{b f_{x}}{\left(u_{l}-u_{r}\right)}=\text { depth } $$
+$$ z=\frac{b f_{x}}{\left(u_{l}-u_{r}\right)}=\text { depth } $$
 
 The focal length in pixels can be obtained using the following:<br><br>
 
