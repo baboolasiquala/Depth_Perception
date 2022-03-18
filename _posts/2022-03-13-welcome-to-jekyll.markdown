@@ -259,7 +259,13 @@ Once a depth map has been created there are multiple integrations that can be do
  
 
 <li><a href="https://www.youtube.com/watch?v=LR0bDLCElKg">Teslas work in depth perception.</a></li><br>
+<li><a href="https://github.com/niconielsen32/ComputerVision/tree/master/StereoVisionDepthEstimation">This guy's github has the code for calibration, triagulation, stereo calibration, stereo vision.</a></li><br>
+<li><a href="https://www.youtube.com/watch?v=jhOTm3MZDaY&t=43s">Depth Maps in OpenCV - Stereo Vision with code Examples.</a></li><br>
+<li><a href="https://www.youtube.com/watch?v=S-UHiFsn-GI&list=PL2zRqk16wsdoCCLpou-dGo7QQNks1Ppzo">Camera Calibration Theory Playlist by Shree Nayar from Columbia University.</a></li><br>
+<li><a href="https://docs.opencv.org/3.4/dd/d53/tutorial_py_depthmap.html">OpenCV depth theory.</a></li><br>
+<li><a href="https://learnopencv.com/depth-perception-using-stereo-camera-python-c/">OpenCV documentation Depth perception using stereo camera - theory and talk of matching algorithms.</a></li><br>
+<li><a href="https://learnopencv.com/introduction-to-epipolar-geometry-and-stereo-vision/">OpenCV epipolar geometry.</a></li><br>
+
+
 
 [Github](https://github.com/steiva/me455project)
-
-[jekyll-gh]:   https://github.com/steiva/me455project
