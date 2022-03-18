@@ -24,9 +24,9 @@ $$ \begin{aligned}
 \frac{y_{i}}{f}=\frac{y_{c}}{z_{c}}
 \end{aligned} $$
 
-xi = image coords in x, xc = camera coords in x
-zc = camera coords in z, f = focal length
-yi = image coords in y, yc = camera coords in y
+Where $$ x_{i} $$ = image coords in $$ x $$, $$ x_{c} $$ = camera coords in $$ x $$
+$$ z_{c} $$ = camera coords in $$ z $$, $$ f $$ = focal length
+$$ y_{i} $$ = image coords in $$ y $$, $$ y_{c} $$ = camera coords in $$ y $$
 
 
 Bearing in mind that the image co-ordinates are captures by the image sensors of the cameras, we need to transform the co-ordinates once more from standard co-ordinates to pixels. When doing that we realize that the pixels themselves need not necessarily be square in nature but may also be rectangular.
@@ -39,8 +39,8 @@ $$ \begin{aligned}
 &m_{x} f=f_{x}, \quad m_{y} f=f_{y}
 \end{aligned} $$
 
-mx = pixel density in x, ox = principal point in x.
-my = pixel density in y, oy = principal point in y.
+$$ m_{x} $$ = pixel density in $$ x $$, $$ o_{x} $$ = principal point in $$ x $$.
+$$ m_{y} $$ = pixel density in $$ y $$, $$ o_{y} $$ = principal point in $$ y $$.
 
 The directional focal lengths and the principal point is referred to as the camera's internal geometry, thus bearing out the intrinsic matrix.
 
@@ -102,8 +102,8 @@ It should be noted that the rotation matrix is a orthonormal matrix as in, when 
 
 $$ X_{c}=R\left(X_{w}-C_{w}\right)=R X_{w}-R C_{w}=R X_{w}+t $$
 
-Xc is a vector from the camera to any point in world coordinate frame
-Cw = Vector from world coordinate to any point
+$$ X_{c} $$ is a vector from the camera to any point in world coordinate frame
+$$ C_{w} $$ = Vector from world coordinate to any point
 
 $$ X_{c}=\left[\begin{array}{l}
 x_{c} \\
@@ -168,7 +168,7 @@ z_{w} \\
 1
 \end{array}\right] $$
 
-P = projection matrix
+$$ P $$ = projection matrix.
 
 With this we have calibrated our camera. <br><br>
 
@@ -342,7 +342,6 @@ As we can see, the quality is comparable, however, it depends on what the fundam
 <h2>Results Obtained</h2>
 Using this setup we managed to achieve these results. Keep in mind that applying postprocessing to your video feed can cut you some frames. Below we display 3 examples of real-time disparity maps, one of which is raw, the other two are with postprocessing.
 
-[Disparity Gif](/assets/Gifs/disparity.gif)
 <iframe src="https://giphy.com/embed/zF7atpM8PXi1nMiiRH" width="720" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 <iframe src="https://giphy.com/embed/g4UmwJg55GpuEGoMUB" width="720" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 <iframe src="https://giphy.com/embed/Wja0v1r3Fs23QYRGJU" width="720" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
