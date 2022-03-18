@@ -20,8 +20,13 @@ In order to go about this math we must understand that there are 3 planes we tra
 
 Based on our working understanding of perspective projections we can infer the image co-ordinates with respect to the camera.<br><br>
 ![1](./assets/images/1.png){:class="img-responsive"}<br><br>
+$$ \frac{x_{i}}{f}=\frac{x_{c}}{z_{c}} $$
 ![2](./assets/images/2.png){:class="img-responsive"}<br>
 ![3](./assets/images/3.png){:class="img-responsive"}<br><br>
+$$ \begin{aligned}
+&x_{i}=\text { image coords in } x, x_{c}=\text { camera coords in } x \\
+&z_{c}=\text { camera coords in } z, f=\text { focal length }
+\end{aligned} $$
 ![4](./assets/images/4.png){:class="img-responsive"}<br>
 
 Bearing in mind that the image co-ordinates are captures by the image sensors of the cameras, we need to transform the co-ordinates once more from standard co-ordinates to pixels. When doing that we realize that the pixels themselves need not necessarily be square in nature but may also be rectangular.
