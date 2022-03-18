@@ -23,11 +23,10 @@ Based on our working understanding of perspective projections we can infer the i
 $$ \frac{x_{i}}{f}=\frac{x_{c}}{z_{c}} $$
 ![2](./assets/images/2.png){:class="img-responsive"}<br>
 ![3](./assets/images/3.png){:class="img-responsive"}<br><br>
-$$ \begin{aligned}
-&x_{i}=\text { image coords in } x, x_{c}=\text { camera coords in } x \\
-&z_{c}=\text { camera coords in } z, f=\text { focal length }
-\end{aligned} $$
+
 ![4](./assets/images/4.png){:class="img-responsive"}<br>
+$$ \frac{y_{i}}{f}=\frac{y_{c}}{z_{c}} $$
+
 
 Bearing in mind that the image co-ordinates are captures by the image sensors of the cameras, we need to transform the co-ordinates once more from standard co-ordinates to pixels. When doing that we realize that the pixels themselves need not necessarily be square in nature but may also be rectangular.
 
@@ -36,6 +35,12 @@ The principal is with respect to the top left corner of an image. <br><br>
 ![6](./assets/images/6.png){:class="img-responsive"}<br>
 ![7](./assets/images/7.png){:class="img-responsive"}<br>
 
+$$ \begin{aligned}
+&u=m_{x} x_{i}=m_{x} f \frac{x_{c}}{z_{c}}+o_{x} \\
+&v=m_{y} y_{i}=m_{y} f \frac{y_{c}}{z_{c}}+o_{y} \\
+&m_{x} f=f_{x}, \quad m_{y} f=f_{y}
+\end{aligned} $$
+
 The directional focal lengths and the principal point is referred to as the camera's internal geometry, thus bearing out the intrinsic matrix.
 
 Once we gain the 2D parameters of the image we have convert it into its homogenous 3D representation in order to do the transformation into the camera's co-ordinate system.<br><br>
@@ -43,6 +48,50 @@ Once we gain the 2D parameters of the image we have convert it into its homogeno
 ![9](./assets/images/9.png){:class="img-responsive"}<br>
 ![10](./assets/images/10.png){:class="img-responsive"}<br>
 ![11](./assets/images/11.png){:class="img-responsive"}<br>
+
+$$ \begin{aligned}
+&{\left[\begin{array}{l}
+u \\
+v
+\end{array}\right]=\left[\begin{array}{l}
+u \\
+v \\
+1
+\end{array}\right]=\left[\begin{array}{c}
+\tilde{u} \\
+\tilde{v} \\
+\tilde{w}
+\end{array}\right]=\left[\begin{array}{cccc}
+f_{x} & 0 & 0_{x} & 0 \\
+0 & f_{y} & o_{y} & 0 \\
+0 & 0 & 1 & 0
+\end{array}\right]\left[\begin{array}{c}
+x_{c} \\
+y_{c} \\
+z_{c} \\
+1
+\end{array}\right]} \\
+&K=\left[\begin{array}{ccc}
+f_{x} & 0 & o_{x} \\
+0 & f_{y} & o_{y} \\
+0 & 0 & 1
+\end{array}\right]\right. \\
+&M_{\text {int }}=[K \mid 0]=\left[\begin{array}{cccc}
+f_{x} & 0 & o_{x} & 0 \\
+0 & f_{y} & o_{y} & 0 \\
+0 & 0 & 1 & 0
+\end{array}\right] \\
+&\tilde{u}=M_{i n t} \tilde{X}_{c}=[K \mid 0] \tilde{X}_{c}=\left[\begin{array}{cccc}
+f_{x} & 0 & o_{x} & 0 \\
+0 & f_{y} & o_{y} & 0 \\
+0 & 0 & 1 & 0
+\end{array}\right]\left[\begin{array}{c}
+x_{c} \\
+y_{c} \\
+z_{c} \\
+1
+\end{array}\right]
+\end{aligned} $$
 
 Now we have to do the mapping from camera co-ordinate frame to the world co-ordinate frame which is a 3D to 3D transformation, this done knowing the position and orientation of the camera co-ordinate frame with respect to the world co-ordinate frame. <br><br>
 
