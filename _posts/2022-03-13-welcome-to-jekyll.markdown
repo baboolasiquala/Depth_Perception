@@ -18,21 +18,13 @@ In order to go about this math we must understand that there are 3 planes we tra
 <h2>Camera Calibration</h2>
 
 Based on our working understanding of perspective projections we can infer the image co-ordinates with respect to the camera.<br><br>
-![1](./assets/images/1.png){:class="img-responsive"}<br><br>
 $$ \frac{x_{i}}{f}=\frac{x_{c}}{z_{c}} $$
-![2](./assets/images/2.png){:class="img-responsive"}<br>
-![3](./assets/images/3.png){:class="img-responsive"}<br><br>
-
-![4](./assets/images/4.png){:class="img-responsive"}<br>
 $$ \frac{y_{i}}{f}=\frac{y_{c}}{z_{c}} $$
 
 
 Bearing in mind that the image co-ordinates are captures by the image sensors of the cameras, we need to transform the co-ordinates once more from standard co-ordinates to pixels. When doing that we realize that the pixels themselves need not necessarily be square in nature but may also be rectangular.
 
 The principal is with respect to the top left corner of an image. <br><br>
-![5](./assets/images/5.png){:class="img-responsive"}<br>
-![6](./assets/images/6.png){:class="img-responsive"}<br>
-![7](./assets/images/7.png){:class="img-responsive"}<br>
 
 $$ \begin{aligned}
 &u=m_{x} x_{i}=m_{x} f \frac{x_{c}}{z_{c}}+o_{x} \\
@@ -43,10 +35,6 @@ $$ \begin{aligned}
 The directional focal lengths and the principal point is referred to as the camera's internal geometry, thus bearing out the intrinsic matrix.
 
 Once we gain the 2D parameters of the image we have convert it into its homogenous 3D representation in order to do the transformation into the camera's co-ordinate system.<br><br>
-![8](./assets/images/8.png){:class="img-responsive"}<br>
-![9](./assets/images/9.png){:class="img-responsive"}<br>
-![10](./assets/images/10.png){:class="img-responsive"}<br>
-![11](./assets/images/11.png){:class="img-responsive"}<br>
 
 $$ \begin{aligned}
 &{\left[\begin{array}{l}
@@ -94,8 +82,6 @@ z_{c} \\
 
 Now we have to do the mapping from camera co-ordinate frame to the world co-ordinate frame which is a 3D to 3D transformation, this done knowing the position and orientation of the camera co-ordinate frame with respect to the world co-ordinate frame. <br><br>
 
-![12](./assets/images/12.png){:class="img-responsive"}<br><br>
-
 $$ R=\left[\begin{array}{lll}
 r_{11} & r_{12} & r_{13} \\
 r_{21} & r_{22} & r_{23} \\
@@ -104,13 +90,7 @@ r_{31} & r_{32} & r_{33}
 
 It should be noted that the rotation matrix is a orthonormal matrix as in, when a dot product is carried by itself it produces an Identity matrix and it's inverse is equivalent to it's transpose.<br><br>
 
-![13](./assets/images/13.png){:class="img-responsive"}<br><br>
-
 $$ X_{c}=R\left(X_{w}-C_{w}\right)=R X_{w}-R C_{w}=R X_{w}+t $$
-
-![13_1](./assets/images/13_1.png){:class="img-responsive"}<br>
-![14](./assets/images/14.png){:class="img-responsive"}<br><br>
-![15](./assets/images/15.png){:class="img-responsive"}<br>
 
 $$ X_{c}=\left[\begin{array}{l}
 x_{c} \\
@@ -132,10 +112,6 @@ t_{z}
 
 
 In order to get a more concise algorithm to solve things, we can transform our current matrix into Homogenous Co-ordinates.<br><br>
-
-![16](./assets/images/16.png){:class="img-responsive"}<br><br>
-![17](./assets/images/17.png){:class="img-responsive"}<br><br>
-![18](./assets/images/18.png){:class="img-responsive"}<br>
 
 $$ \begin{aligned}
 &\tilde{X}_{c}=\left[\begin{array}{c}
@@ -167,8 +143,6 @@ As noted from above we see that we can extract the extrinsic matrix that contain
 
 We can now transform the world co-ordinates to image co-ordinates with the transformations we have crafted thus far.<br><br>
 
-![19](./assets/images/19.png){:class="img-responsive"}<br>
-
 $$ \tilde{u}=M_{i n t} M_{e x t} \tilde{X}_{w}=P \tilde{X}_{w}=\left[\begin{array}{llll}
 P_{11} & P_{12} & P_{13} & P_{14} \\
 P_{21} & P_{22} & P_{23} & P_{24} \\
@@ -187,18 +161,12 @@ With this we have calibrated our camera. <br><br>
 We first have to set up 2 cameras which have been calibrated and are set up apart horizontally by a known distance. There can be no difference in any other aspects of orientation other than the horizontal distance it is set apart by. The kind of stereo vision that is generated is called binocular vision. <br>
 The idea is that 2 cameras are seperated by a realtively small horizontal distance. Based on this fact the images captured will be slightly translated relative to one other. So we would need to calibrate both cameras based on earlier but with a single caveat being that the camera that was shifted to the right would have to account for the shift in the horizontal direction.<br>
 
-![20](./assets/images/20.png){:class="img-responsive"}<br>
-![21](./assets/images/21.png){:class="img-responsive"}<br>
-
 $$ \begin{aligned}
 &u_{l}=f_{x} \frac{x}{z}+o_{x} ; v_{l}=f_{y} \frac{y}{z}+o_{y} \\
 &u_{r}=f_{x} \frac{\dot{x}-b}{z}+o_{x} ; v_{r}=f_{y} \frac{y}{z}+o_{y}
 \end{aligned} $$
 
 From the calibration we know of the intrinsic parameters and can re-arrange the equation to find the world co-ordinates. <br><br>
-![22](./assets/images/22.png){:class="img-responsive"}<br>
-![23](./assets/images/23.png){:class="img-responsive"}<br>
-![24](./assets/images/24.png){:class="img-responsive"}<br>
 
 $$ \begin{aligned}
 &x=\frac{b\left(u_{l}-o_{x}\right)}{u_{l}-u_{r}} ; u_{l}-u_{r}=\text { disparity } \\
