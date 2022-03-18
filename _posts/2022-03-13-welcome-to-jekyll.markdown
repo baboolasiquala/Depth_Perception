@@ -70,7 +70,7 @@ y_{c} \\
 z_{c} \\
 1
 \end{array}\right]} \\
-&K=\left[\begin{array}{ccc}
+&K\left(\text { Calibration Matrix) }=\left[\begin{array}{ccc}
 f_{x} & 0 & o_{x} \\
 0 & f_{y} & o_{y} \\
 0 & 0 & 1
