@@ -18,8 +18,15 @@ In order to go about this math we must understand that there are 3 planes we tra
 <h2>Camera Calibration</h2>
 
 Based on our working understanding of perspective projections we can infer the image co-ordinates with respect to the camera.<br><br>
-$$ \frac{x_{i}}{f}=\frac{x_{c}}{z_{c}} $$
-$$ \frac{y_{i}}{f}=\frac{y_{c}}{z_{c}} $$
+
+$$ \begin{aligned}
+\frac{x_{i}}{f}=\frac{x_{c}}{z_{c}}\\
+\frac{y_{i}}{f}=\frac{y_{c}}{z_{c}}
+\end{aligned} $$
+
+xi = image coords in x, xc = camera coords in x
+zc = camera coords in z, f = focal length
+yi = image coords in y, yc = camera coords in y
 
 
 Bearing in mind that the image co-ordinates are captures by the image sensors of the cameras, we need to transform the co-ordinates once more from standard co-ordinates to pixels. When doing that we realize that the pixels themselves need not necessarily be square in nature but may also be rectangular.
@@ -31,6 +38,9 @@ $$ \begin{aligned}
 &v=m_{y} y_{i}=m_{y} f \frac{y_{c}}{z_{c}}+o_{y} \\
 &m_{x} f=f_{x}, \quad m_{y} f=f_{y}
 \end{aligned} $$
+
+mx = pixel density in x, ox = principal point in x.
+my = pixel density in y, oy = principal point in y.
 
 The directional focal lengths and the principal point is referred to as the camera's internal geometry, thus bearing out the intrinsic matrix.
 
@@ -91,6 +101,9 @@ r_{31} & r_{32} & r_{33}
 It should be noted that the rotation matrix is a orthonormal matrix as in, when a dot product is carried by itself it produces an Identity matrix and it's inverse is equivalent to it's transpose.<br><br>
 
 $$ X_{c}=R\left(X_{w}-C_{w}\right)=R X_{w}-R C_{w}=R X_{w}+t $$
+
+Xc is a vector from the camera to any point in world coordinate frame
+Cw = Vector from world coordinate to any point
 
 $$ X_{c}=\left[\begin{array}{l}
 x_{c} \\
@@ -155,6 +168,8 @@ z_{w} \\
 1
 \end{array}\right] $$
 
+P = projection matrix
+
 With this we have calibrated our camera. <br><br>
 
 <h2>Triangulation using 2 Cameras</h2><br>
@@ -165,6 +180,8 @@ $$ \begin{aligned}
 &u_{l}=f_{x} \frac{x}{z}+o_{x} ; v_{l}=f_{y} \frac{y}{z}+o_{y} \\
 &u_{r}=f_{x} \frac{\dot{x}-b}{z}+o_{x} ; v_{r}=f_{y} \frac{y}{z}+o_{y}
 \end{aligned} $$
+
+b = baseline distance between two lenses
 
 From the calibration we know of the intrinsic parameters and can re-arrange the equation to find the world co-ordinates. <br><br>
 
@@ -330,9 +347,6 @@ Using this setup we managed to achieve these results. Keep in mind that applying
 <iframe src="https://giphy.com/embed/g4UmwJg55GpuEGoMUB" width="720" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 <iframe src="https://giphy.com/embed/Wja0v1r3Fs23QYRGJU" width="720" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 
-
-$$ \nabla_\boldsymbol{x} J(\boldsymbol{x}) $$
-
 <h2>Future Work</h2>
 <ol>
 <li>The next most obvious step for future work is going from the disparity map to a depth map. For this the transformation is as follows:<br><br>
@@ -355,7 +369,7 @@ Once a depth map has been created there are multiple integrations that can be do
 <ol>
 
  
-
+<li><a href="https://github.com/steiva/me455project">Our github.</a></li><br>
 <li><a href="https://www.youtube.com/watch?v=LR0bDLCElKg">Teslas work in depth perception.</a></li><br>
 <li><a href="https://github.com/niconielsen32/ComputerVision/tree/master/StereoVisionDepthEstimation">This guy's github has the code for calibration, triagulation, stereo calibration, stereo vision.</a></li><br>
 <li><a href="https://www.youtube.com/watch?v=jhOTm3MZDaY&t=43s">Depth Maps in OpenCV - Stereo Vision with code Examples.</a></li><br>
@@ -363,7 +377,3 @@ Once a depth map has been created there are multiple integrations that can be do
 <li><a href="https://docs.opencv.org/3.4/dd/d53/tutorial_py_depthmap.html">OpenCV depth theory.</a></li><br>
 <li><a href="https://learnopencv.com/depth-perception-using-stereo-camera-python-c/">OpenCV documentation Depth perception using stereo camera - theory and talk of matching algorithms.</a></li><br>
 <li><a href="https://learnopencv.com/introduction-to-epipolar-geometry-and-stereo-vision/">OpenCV epipolar geometry.</a></li><br>
-
-
-
-[Github](https://github.com/steiva/me455project)
