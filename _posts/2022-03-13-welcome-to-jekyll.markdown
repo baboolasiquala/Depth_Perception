@@ -24,9 +24,9 @@ $$ \begin{aligned}
 \frac{y_{i}}{f}=\frac{y_{c}}{z_{c}}
 \end{aligned} $$
 
-Where $$ x_{i} $$ = image coords in $$ x $$, $$ x_{c} $$ = camera coords in $$ x $$
-$$ z_{c} $$ = camera coords in $$ z $$, $$ f $$ = focal length
-$$ y_{i} $$ = image coords in $$ y $$, $$ y_{c} $$ = camera coords in $$ y $$
+Where $$ x_{i} $$ = image coords in $$ x $$, $$ x_{c} $$ = camera coords in $$ x $$,
+$$ z_{c} $$ = camera coords in $$ z $$, $$ f $$ = focal length,
+$$ y_{i} $$ = image coords in $$ y $$, $$ y_{c} $$ = camera coords in $$ y $$.
 
 
 Bearing in mind that the image co-ordinates are captures by the image sensors of the cameras, we need to transform the co-ordinates once more from standard co-ordinates to pixels. When doing that we realize that the pixels themselves need not necessarily be square in nature but may also be rectangular.
@@ -39,7 +39,7 @@ $$ \begin{aligned}
 &m_{x} f=f_{x}, \quad m_{y} f=f_{y}
 \end{aligned} $$
 
-$$ m_{x} $$ = pixel density in $$ x $$, $$ o_{x} $$ = principal point in $$ x $$.
+Where $$ m_{x} $$ = pixel density in $$ x $$, $$ o_{x} $$ = principal point in $$ x $$.
 $$ m_{y} $$ = pixel density in $$ y $$, $$ o_{y} $$ = principal point in $$ y $$.
 
 The directional focal lengths and the principal point is referred to as the camera's internal geometry, thus bearing out the intrinsic matrix.
@@ -68,11 +68,11 @@ y_{c} \\
 z_{c} \\
 1
 \end{array}\right]} \\
-&K\left(\text { Calibration Matrix) }=\left[\begin{array}{ccc}
+&K=\left[\begin{array}{ccc}
 f_{x} & 0 & o_{x} \\
 0 & f_{y} & o_{y} \\
 0 & 0 & 1
-\end{array}\right]\right. \\
+\end{array}\right] \\
 &M_{\text {int }}=[K \mid 0]=\left[\begin{array}{cccc}
 f_{x} & 0 & o_{x} & 0 \\
 0 & f_{y} & o_{y} & 0 \\
@@ -102,8 +102,8 @@ It should be noted that the rotation matrix is a orthonormal matrix as in, when 
 
 $$ X_{c}=R\left(X_{w}-C_{w}\right)=R X_{w}-R C_{w}=R X_{w}+t $$
 
-$$ X_{c} $$ is a vector from the camera to any point in world coordinate frame
-$$ C_{w} $$ = Vector from world coordinate to any point
+Where $$ X_{c} $$ is a vector from the camera to any point in world coordinate frame,
+$$ C_{w} $$ is a vector from world coordinates to any point.
 
 $$ X_{c}=\left[\begin{array}{l}
 x_{c} \\
@@ -168,7 +168,7 @@ z_{w} \\
 1
 \end{array}\right] $$
 
-$$ P $$ = projection matrix.
+Where $$ P $$ is the projection matrix.
 
 With this we have calibrated our camera. <br><br>
 
