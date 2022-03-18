@@ -13,11 +13,11 @@ The rationale provided above is also the reason why a single camera is not suffi
 
 In order to use the Disparity to deduce depth we have to then use Traingulation which is a geometric approach used to deduce depth. 
 
-In order to go about this math we must understand that there are 3 planes we travel in between in order to deduce depth. There is the world co-ordinate plane, the camera co-ordinate plane and the image co-ordinate plane. Image plane is where the image sensor lies and the camera plane is where the lens lies. A transformation is undergone from 3D to 2D when we tranform the co-ordinates from the world co-ordinates to the image co-ordinates and vice versa. The transformation from the world co-ordinates to the camera co-ordinates is a 3-D to 3-D tranformation and the tranformation from the camera to the image plane in a 3-D to 2-D transformation. 
+In order to go about this math we must understand that there are 3 planes we travel in between in order to deduce depth. There is the world coordinate plane, the camera coordinate plane and the image coordinate plane. Image plane is where the image sensor lies and the camera plane is where the lens lies. A transformation is undergone from 3D to 2D when we tranform the coordinates from the world coordinates to the image coordinates and vice versa. The transformation from the world coordinates to the camera coordinates is a 3-D to 3-D tranformation and the tranformation from the camera to the image plane in a 3-D to 2-D transformation. 
 
 <h2>Camera Calibration</h2>
 
-Based on our working understanding of perspective projections we can infer the image co-ordinates with respect to the camera.<br><br>
+Based on our working understanding of perspective projections we can infer the image coordinates with respect to the camera.<br><br>
 
 $$ \begin{aligned}
 \frac{x_{i}}{f}=\frac{x_{c}}{z_{c}}\\
@@ -29,7 +29,7 @@ $$ z_{c} $$ = camera coords in $$ z $$, $$ f $$ = focal length,
 $$ y_{i} $$ = image coords in $$ y $$, $$ y_{c} $$ = camera coords in $$ y $$.
 
 
-Bearing in mind that the image co-ordinates are captures by the image sensors of the cameras, we need to transform the co-ordinates once more from standard co-ordinates to pixels. When doing that we realize that the pixels themselves need not necessarily be square in nature but may also be rectangular.
+Bearing in mind that the image coordinates are captures by the image sensors of the cameras, we need to transform the coordinates once more from standard coordinates to pixels. When doing that we realize that the pixels themselves need not necessarily be square in nature but may also be rectangular.
 
 The principal is with respect to the top left corner of an image. <br><br>
 
@@ -44,7 +44,7 @@ $$ m_{y} $$ = pixel density in $$ y $$, $$ o_{y} $$ = principal point in $$ y $$
 
 The directional focal lengths and the principal point is referred to as the camera's internal geometry, thus bearing out the intrinsic matrix.
 
-Once we gain the 2D parameters of the image we have convert it into its homogenous 3D representation in order to do the transformation into the camera's co-ordinate system.<br><br>
+Once we gain the 2D parameters of the image we have convert it into its homogenous 3D representation in order to do the transformation into the camera's coordinate system.<br><br>
 
 $$ \begin{aligned}
 &{\left[\begin{array}{l}
@@ -90,7 +90,7 @@ z_{c} \\
 \end{array}\right]
 \end{aligned} $$
 
-Now we have to do the mapping from camera co-ordinate frame to the world co-ordinate frame which is a 3D to 3D transformation, this done knowing the position and orientation of the camera co-ordinate frame with respect to the world co-ordinate frame. <br><br>
+Now we have to do the mapping from camera coordinate frame to the world coordinate frame which is a 3D to 3D transformation, this done knowing the position and orientation of the camera coordinate frame with respect to the world coordinate frame. <br><br>
 
 $$ R=\left[\begin{array}{lll}
 r_{11} & r_{12} & r_{13} \\
@@ -124,7 +124,7 @@ t_{z}
 \end{array}\right] $$
 
 
-In order to get a more concise algorithm to solve things, we can transform our current matrix into Homogenous Co-ordinates.<br><br>
+In order to get a more concise algorithm to solve things, we can transform our current matrix into Homogenous Coordinates.<br><br>
 
 $$ \begin{aligned}
 &\tilde{X}_{c}=\left[\begin{array}{c}
@@ -154,7 +154,7 @@ r_{31} & r_{32} & r_{33} & t_{z} \\
 
 As noted from above we see that we can extract the extrinsic matrix that contains the parameters of all involved external parameters and construct the extrinsic matrix.<br><br>
 
-We can now transform the world co-ordinates to image co-ordinates with the transformations we have crafted thus far.<br><br>
+We can now transform the world coordinates to image coordinates with the transformations we have crafted thus far.<br><br>
 
 $$ \tilde{u}=M_{i n t} M_{e x t} \tilde{X}_{w}=P \tilde{X}_{w}=\left[\begin{array}{llll}
 P_{11} & P_{12} & P_{13} & P_{14} \\
@@ -183,7 +183,7 @@ $$ \begin{aligned}
 
 Where $$ b $$ is the baseline distance between two lenses.
 
-From the calibration we know of the intrinsic parameters and can re-arrange the equation to find the world co-ordinates. <br><br>
+From the calibration we know of the intrinsic parameters and can re-arrange the equation to find the world coordinates. <br><br>
 
 $$ \begin{aligned}
 &x=\frac{b\left(u_{l}-o_{x}\right)}{u_{l}-u_{r}} ; u_{l}-u_{r}=\text { disparity } \\
