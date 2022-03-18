@@ -6,8 +6,7 @@ date:   2022-03-10 15:33:51 -0800
 categories: jekyll update
 permalink: "CSE455 Project"
 ---
-This Blog is meant to demonstrate how Shaheryar Hasnain(), Ivan Stepanov(), Digjay Das (2029455) used their knowledge of Computer Vision in order to create a map of how far an object is with respect to the image produced by the cameras. 
-
+<h2>Theory</h2>
 In order to deduce depth perception we are in need of 2 cameras at a specified horizontal distance to each other and are relatively on the same vertical axis. Both cameras are required to take pictures at the same time of the same scene in order to deduce depth. It does so by using Stereo Disparity, which is the difference in image location from the left and right image taken from the camera. 
 
 The rationale provided above is also the reason why a single camera is not sufficient to deduce depth, at least without being aided with the help of neural networks or using Active stereo with the employment of light.
