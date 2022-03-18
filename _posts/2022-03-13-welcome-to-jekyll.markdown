@@ -201,10 +201,11 @@ Performing depth perception with readily available hardware (such as old android
 
 Our setup consisted of two android cameras being used as wireless IP cameras. <br>
 
-{:refdef: style="text-align: center;"}
+| {:refdef: style="text-align: center;"}
 ![25](./assets/images/25.png){:class="img-responsive"}{:height="300px" width="400px"}<br><br>
-{: refdef}
-*Fig. 1. Photograph of our stereo camera setup.*
+{: refdef} |
+|:--:| 
+| *Fig. 1. Photograph of our stereo camera setup.* |
 
 <b>Cameras being used:</b><br><br>
 
@@ -275,20 +276,23 @@ The first step is to determine the relationship between the cameras and their in
 
 Successful matches should be as follows where all the number of the corners defined in the code are mapped and have the same color in the two images:
 
-![27](./assets/images/27.png){:class="img-responsive"}<br><br>
-*Fig. 2. Example of successful chessboard corner matching.*
+| ![27](./assets/images/27.png){:class="img-responsive"}<br><br> |
+|:--:| 
+| *Fig. 2. Example of successful chessboard corner matching.* |
 
 Possible issues at this stage can be that the corners are not found at all or the points are erroneously identified. If the corners are not found there is another function `cv.findChessboardCornersSB()` that can be used which uses a different algorithm and in our experience performed better, however ideally this should not be required.
 
 Due to low resolution or sharp angles often the matches on the board were not the same as in the following:
 
-![28](./assets/images/28.png){:class="img-responsive"}<br><br>
-*Fig. 3. Example of an unsuccessful chessboard corner matching.*
+| ![28](./assets/images/28.png){:class="img-responsive"}<br><br> |
+|:--:| 
+| *Fig. 3. Example of an unsuccessful chessboard corner matching.* |
 
 Another difficult to detect issue is when one checkerboard is detected as inverted, one can know this if the colors do not align as in the following:
 
-![29](./assets/images/29.png){:class="img-responsive"}<br><br>
-*Fig. 4. Unwanted inversion of color order in chessboard matching.*
+| ![29](./assets/images/29.png){:class="img-responsive"}<br><br> |
+|:--:| 
+| *Fig. 4. Unwanted inversion of color order in chessboard matching.* |
 
 It is important to remove any such images as even one such pair of images can distort the output and create errors with the rectification.
 
@@ -296,15 +300,17 @@ Following the identification of the points the intrinsic and extrinsic camera ma
 
 Finally, the stereo map can be used to rectify any pair of images from the camera setup using `cv.remap()`. A good test for successful calibration and rectification is to overlap the two images using `cv.addWeighted()` and check if the y axis are fully aligned as in the following image:
 
-{:refdef: style="text-align: center;"}
+| {:refdef: style="text-align: center;"}
 ![30](./assets/images/30.png){:class="img-responsive"}<br><br>
-{: refdef}
-*Fig. 5. An example of proper vertical alignment of the stereo image pair.*
+{: refdef} |
+|:--:| 
+| *Fig. 5. An example of proper vertical alignment of the stereo image pair.* |
 
 A poorly overlayed example could be:
 
-![31](./assets/images/31.png){:class="img-responsive"}<br><br>
-*Fig. 6. An example of poorly aligned stereo image pair.*
+| ![31](./assets/images/31.png){:class="img-responsive"}<br><br> |
+|:--:| 
+| *Fig. 6. An example of poorly aligned stereo image pair.* |
 
 There are multiple issues that are possible in calibration and rectification and it is important to test at the intermediate steps utilizing the methods mentioned above.
 
@@ -340,10 +346,11 @@ disparity = matcher.compute(imgL_rect, imgR_rect)
 <h2>Post processing the disparity map</h2>
 Post processing of the disparity map is an important step for achieving better results. In our experiment, the <code>cv.ximgproc.createDisparityWLSFilter()</code> is used. More on it can be read on the official [OpenCV tutorial](https://docs.opencv.org/4.x/d3/d14/tutorial_ximgproc_disparity_filtering.html) , as well as this [Stackoverflow discussion](https://stackoverflow.com/questions/62627109/how-do-you-use-opencvs-disparitywlsfilter-in-python). Our implementation uses both disparity maps - the left and right one, to create a cleaner version. The following examples show the difference between a raw disparity map and a filtered one:
 
-{:refdef: style="text-align: center;"}
+| {:refdef: style="text-align: center;"}
 ![32](./assets/images/32.png){:class="img-responsive"}{:height="747px" width="381px"}<br><br>
-{: refdef}
-*Fig. 7. Comparison of raw and filtered disparity map.*
+{: refdef} |
+|:--:| 
+| *Fig. 7. Comparison of raw and filtered disparity map.* |
 
 Below a sample function constructing and filtering a disparity map can be found:
 
@@ -479,10 +486,11 @@ Comparing these two methods, we determined a number of pros and cons for both of
 </ul>
 Now, let's compare the performance of these two methods using one set of stereo images.
 
-{:refdef: style="text-align: center;"}
+| {:refdef: style="text-align: center;"}
 ![33](./assets/images/comparison.png){:class="img-responsive"}{:height="774px" width="808px"}<br><br>
-{: refdef}
-*Fig. 8. Comparison of Real-time and Precalculated rectification.*
+{: refdef} |
+|:--:| 
+| *Fig. 8. Comparison of Real-time and Precalculated rectification.* |
 
 As we can see, the quality is comparable, however, it depends on what the fundamental matrix is going to be for the real-time rectification method.
 
