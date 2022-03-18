@@ -95,12 +95,40 @@ z_{c} \\
 Now we have to do the mapping from camera co-ordinate frame to the world co-ordinate frame which is a 3D to 3D transformation, this done knowing the position and orientation of the camera co-ordinate frame with respect to the world co-ordinate frame. <br><br>
 
 ![12](./assets/images/12.png){:class="img-responsive"}<br><br>
+
+$$ R=\left[\begin{array}{lll}
+r_{11} & r_{12} & r_{13} \\
+r_{21} & r_{22} & r_{23} \\
+r_{31} & r_{32} & r_{33}
+\end{array}\right] $$
+
 It should be noted that the rotation matrix is a orthonormal matrix as in, when a dot product is carried by itself it produces an Identity matrix and it's inverse is equivalent to it's transpose.<br><br>
 
 ![13](./assets/images/13.png){:class="img-responsive"}<br><br>
+
+$$ X_{c}=R\left(X_{w}-C_{w}\right)=R X_{w}-R C_{w}=R X_{w}+t $$
+
 ![13_1](./assets/images/13_1.png){:class="img-responsive"}<br>
 ![14](./assets/images/14.png){:class="img-responsive"}<br><br>
 ![15](./assets/images/15.png){:class="img-responsive"}<br>
+
+$$ X_{c}=\left[\begin{array}{l}
+x_{c} \\
+y_{c} \\
+z_{c}
+\end{array}\right]=\left[\begin{array}{lll}
+r_{11} & r_{12} & r_{13} \\
+r_{21} & r_{22} & r_{23} \\
+r_{31} & r_{32} & r_{33}
+\end{array}\right]\left[\begin{array}{l}
+x_{w} \\
+y_{w} \\
+z_{w}
+\end{array}\right]+\left[\begin{array}{l}
+t_{x} \\
+t_{y} \\
+t_{z}
+\end{array}\right] $$
 
 
 In order to get a more concise algorithm to solve things, we can transform our current matrix into Homogenous Co-ordinates.<br><br>
@@ -109,11 +137,49 @@ In order to get a more concise algorithm to solve things, we can transform our c
 ![17](./assets/images/17.png){:class="img-responsive"}<br><br>
 ![18](./assets/images/18.png){:class="img-responsive"}<br>
 
+$$ \begin{aligned}
+&\tilde{X}_{c}=\left[\begin{array}{c}
+x_{c} \\
+y_{c} \\
+z_{c} \\
+1
+\end{array}\right]=\left[\begin{array}{cccc}
+r_{11} & r_{12} & r_{13} & t_{x} \\
+r_{21} & r_{22} & r_{23} & t_{y} \\
+r_{31} & r_{32} & r_{33} & t_{z} \\
+0 & 0 & 0 & 1
+\end{array}\right]\left[\begin{array}{c}
+x_{w} \\
+y_{w} \\
+z_{w} \\
+1
+\end{array}\right] \\
+&M_{e x t}=\left[\begin{array}{cccc}
+r_{11} & r_{12} & r_{13} & t_{x} \\
+r_{21} & r_{22} & r_{23} & t_{y} \\
+r_{31} & r_{32} & r_{33} & t_{z} \\
+0 & 0 & 0 & 1
+\end{array}\right] \\
+&\tilde{X}_{c}=M_{e x t} \tilde{X}_{w}
+\end{aligned} $$
+
 As noted from above we see that we can extract the extrinsic matrix that contains the parameters of all involved external parameters and construct the extrinsic matrix.<br><br>
 
 We can now transform the world co-ordinates to image co-ordinates with the transformations we have crafted thus far.<br><br>
 
 ![19](./assets/images/19.png){:class="img-responsive"}<br>
+
+$$ \tilde{u}=M_{i n t} M_{e x t} \tilde{X}_{w}=P \tilde{X}_{w}=\left[\begin{array}{llll}
+P_{11} & P_{12} & P_{13} & P_{14} \\
+P_{21} & P_{22} & P_{23} & P_{24} \\
+P_{31} & P_{32} & P_{33} & P_{34} \\
+P_{41} & P_{42} & P_{43} & P_{44}
+\end{array}\right]\left[\begin{array}{c}
+x_{w} \\
+y_{w} \\
+z_{w} \\
+1
+\end{array}\right] $$
 
 With this we have calibrated our camera. <br><br>
 
@@ -124,10 +190,21 @@ The idea is that 2 cameras are seperated by a realtively small horizontal distan
 ![20](./assets/images/20.png){:class="img-responsive"}<br>
 ![21](./assets/images/21.png){:class="img-responsive"}<br>
 
+$$ \begin{aligned}
+&u_{l}=f_{x} \frac{x}{z}+o_{x} ; v_{l}=f_{y} \frac{y}{z}+o_{y} \\
+&u_{r}=f_{x} \frac{\dot{x}-b}{z}+o_{x} ; v_{r}=f_{y} \frac{y}{z}+o_{y}
+\end{aligned} $$
+
 From the calibration we know of the intrinsic parameters and can re-arrange the equation to find the world co-ordinates. <br><br>
 ![22](./assets/images/22.png){:class="img-responsive"}<br>
 ![23](./assets/images/23.png){:class="img-responsive"}<br>
 ![24](./assets/images/24.png){:class="img-responsive"}<br>
+
+$$ \begin{aligned}
+&x=\frac{b\left(u_{l}-o_{x}\right)}{u_{l}-u_{r}} ; u_{l}-u_{r}=\text { disparity } \\
+&y=\frac{f_{x} b\left(v_{l}-o_{y}\right)}{f_{y}\left(u_{l}-u_{r}\right)} \\
+&z=\frac{b f_{x}}{\left(u_{l}-u_{r}\right)}=\text { depth }
+\end{aligned} $$
 
 <h2>Project</h2>
 
