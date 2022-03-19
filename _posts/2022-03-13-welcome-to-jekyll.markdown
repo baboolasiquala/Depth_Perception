@@ -207,9 +207,7 @@ Performing depth perception with readily available hardware (such as old android
 
 Our setup consisted of two android cameras being used as wireless IP cameras. <br>
 
-{:refdef: style="text-align: center;"}
 | ![25](./assets/images/25.png){:class="img-responsive"}{:height="300px" width="400px"}<br><br> |
-{: refdef}
 |:--:| 
 | *Fig. 1. Photograph of our stereo camera setup.* |
 
@@ -350,9 +348,7 @@ disparity = matcher.compute(imgL_rect, imgR_rect)
 <h2>Post processing the disparity map</h2>
 Post processing of the disparity map is an important step for achieving better results. In our experiment, the <code>cv.ximgproc.createDisparityWLSFilter()</code> is used. More on it can be read on the official [OpenCV tutorial](https://docs.opencv.org/4.x/d3/d14/tutorial_ximgproc_disparity_filtering.html) , as well as this [Stackoverflow discussion](https://stackoverflow.com/questions/62627109/how-do-you-use-opencvs-disparitywlsfilter-in-python). Our implementation uses both disparity maps - the left and right one, to create a cleaner version. The following examples show the difference between a raw disparity map and a filtered one:
 
-{:refdef: style="text-align: center;"}
 | ![32](./assets/images/32.png){:class="img-responsive"}{:height="747px" width="381px"}<br><br> |
-{: refdef}
 |:--:| 
 | *Fig. 7. Comparison of raw and filtered disparity map.* |
 
@@ -490,9 +486,7 @@ Comparing these two methods, we determined a number of pros and cons for both of
 </ul>
 Now, let's compare the performance of these two methods using one set of stereo images.
 
-{:refdef: style="text-align: center;"}
 | ![33](./assets/images/comparison.png){:class="img-responsive"}{:height="774px" width="808px"}<br><br> |
-{: refdef}
 |:--:| 
 | *Fig. 8. Comparison of Real-time and Precalculated rectification.* |
 
