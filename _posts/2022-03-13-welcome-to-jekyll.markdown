@@ -7,9 +7,7 @@ categories: jekyll update
 permalink: "CSE455 Project"
 ---
 <h2>Abstract</h2>
-{:refdef: style="text-align: center;"}
-<iframe style="display: block; margin: auto;" width="560" height="315" src="https://www.youtube.com/embed/6IomrUE3VVw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-{: refdef}
+<div style="text-align: center;"><iframe width="560" height="315" src="https://www.youtube.com/embed/6IomrUE3VVw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 <h2>Theory</h2>
 In order to deduce depth perception we are in need of 2 cameras at a specified horizontal distance to each other and are relatively on the same vertical axis. Both cameras are required to take pictures at the same time of the same scene in order to deduce depth. It does so by using Stereo Disparity, which is the difference in image location from the left and right image taken from the camera. 
