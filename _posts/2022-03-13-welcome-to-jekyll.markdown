@@ -10,6 +10,7 @@ permalink: "CSE455 Project"
 {:refdef: style="text-align: center;"}
 <iframe width="420" height="315" src="https://www.youtube.com/watch?v=6IomrUE3VVw" frameborder="0" allowfullscreen></iframe><br>
 <iframe width="420" height="315" src="http://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6IomrUE3VVw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 {: refdef}
 
 <h2>Theory</h2>
