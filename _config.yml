@@ -17,6 +17,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
+markdown: kramdown
 
 title: Depth Perception
 email: ddas97@uw.edu; steiva@uw.edu; shaheryar.hasnain@gmail.com
