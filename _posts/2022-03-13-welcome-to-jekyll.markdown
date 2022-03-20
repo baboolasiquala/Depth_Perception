@@ -194,6 +194,12 @@ $$ \begin{aligned}
 &z=\frac{b f_{x}}{\left(u_{l}-u_{r}\right)}=\text { depth }
 \end{aligned} $$
 
+Figure one is a good illustration of the provided concepts:
+
+| ![24](./assets/images/stereo_coordinate_systems_rehg_dellaert.jpg){:class="img-responsive"}<br><br> |
+|:--:| 
+| *Fig. 1. Illustration of triangulation using two cameras.* |
+
 <h2>Project</h2>
 
 The motivation for our project is to create a platform for doing depth perception with two cheap Android phones utilizing stereo vision. There are multiple ways to perceive depth including the use of neural networks however doing it in real time with hardware has many pitfalls which we aim to uncover.
@@ -204,9 +210,9 @@ Performing depth perception with readily available hardware (such as old android
 
 Our setup consisted of two android cameras being used as wireless IP cameras. <br>
 
-| ![25](./assets/images/25.png){:class="img-responsive"}{:height="300px" width="400px"}<br><br> |
+| ![25](./assets/images/25.png){:class="img-responsive"}<br><br> |
 |:--:| 
-| *Fig. 1. Photograph of our stereo camera setup.* |
+| *Fig. 2. Photograph of our stereo camera setup.* |
 
 <b>Cameras being used:</b><br><br>
 
@@ -279,7 +285,7 @@ Successful matches should be as follows where all the number of the corners defi
 
 | ![27](./assets/images/27.png){:class="img-responsive"}<br><br> |
 |:--:| 
-| *Fig. 2. Example of successful chessboard corner matching.* |
+| *Fig. 3. Example of successful chessboard corner matching.* |
 
 Possible issues at this stage can be that the corners are not found at all or the points are erroneously identified. If the corners are not found there is another function `cv.findChessboardCornersSB()` that can be used which uses a different algorithm and in our experience performed better, however ideally this should not be required.
 
@@ -287,13 +293,13 @@ Due to low resolution or sharp angles often the matches on the board were not th
 
 | ![28](./assets/images/28.png){:class="img-responsive"}<br><br> |
 |:--:| 
-| *Fig. 3. Example of an unsuccessful chessboard corner matching.* |
+| *Fig. 4. Example of an unsuccessful chessboard corner matching.* |
 
 Another difficult to detect issue is when one checkerboard is detected as inverted, one can know this if the colors do not align as in the following:
 
 | ![29](./assets/images/29.png){:class="img-responsive"}<br><br> |
 |:--:| 
-| *Fig. 4. Unwanted inversion of color order in chessboard matching.* |
+| *Fig. 5. Unwanted inversion of color order in chessboard matching.* |
 
 It is important to remove any such images as even one such pair of images can distort the output and create errors with the rectification.
 
@@ -303,13 +309,13 @@ Finally, the stereo map can be used to rectify any pair of images from the camer
 
 | ![30](./assets/images/30.png){:class="img-responsive"}<br><br> |
 |:--:| 
-| *Fig. 5. An example of proper vertical alignment of the stereo image pair.* |
+| *Fig. 6. An example of proper vertical alignment of the stereo image pair.* |
 
 A poorly overlayed example could be:
 
 | ![31](./assets/images/31.png){:class="img-responsive"}<br><br> |
 |:--:| 
-| *Fig. 6. An example of poorly aligned stereo image pair.* |
+| *Fig. 7. An example of poorly aligned stereo image pair.* |
 
 There are multiple issues that are possible in calibration and rectification and it is important to test at the intermediate steps utilizing the methods mentioned above.
 
@@ -347,7 +353,7 @@ Post processing of the disparity map is an important step for achieving better r
 
 | ![32](./assets/images/32.png){:class="img-responsive"}{:height="747px" width="381px"}<br><br> |
 |:--:| 
-| *Fig. 7. Comparison of raw and filtered disparity map.* |
+| *Fig. 8. Comparison of raw and filtered disparity map.* |
 
 Below a sample function constructing and filtering a disparity map can be found:
 
@@ -485,7 +491,7 @@ Now, let's compare the performance of these two methods using one set of stereo 
 
 | ![33](./assets/images/comparison.png){:class="img-responsive"}{:height="774px" width="808px"}<br><br> |
 |:--:| 
-| *Fig. 8. Comparison of Real-time and Precalculated rectification.* |
+| *Fig. 9. Comparison of Real-time and Precalculated rectification.* |
 
 As we can see, the quality is comparable, however, it depends on what the fundamental matrix is going to be for the real-time rectification method.
 
