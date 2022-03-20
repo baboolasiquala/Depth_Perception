@@ -6,6 +6,10 @@ date:   2022-03-10 15:33:51 -0800
 categories: jekyll update
 permalink: "CSE455 Project"
 ---
+
+* TOC
+{:toc}
+
 <h2>Abstract</h2>
 <div style="text-align: center;"><iframe width="560" height="315" src="https://www.youtube.com/embed/6IomrUE3VVw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
@@ -194,7 +198,7 @@ $$ \begin{aligned}
 &z=\frac{b f_{x}}{\left(u_{l}-u_{r}\right)}=\text { depth }
 \end{aligned} $$
 
-Figure one is a good illustration of the provided concepts:
+Figure one [we found online](https://johnwlambert.github.io/stereo/) is a good illustration of the provided concepts:
 
 | ![24](./assets/images/stereo_coordinate_systems_rehg_dellaert.jpg){:class="img-responsive"}<br><br> |
 |:--:| 
